@@ -14,8 +14,8 @@ github.com/dsnet/compress v0.0.1/go.mod h1:Aw8dCMJ7RioblQeTqt88akK31OvO8Dhf5Jflh
 github.com/dsnet/golib v0.0.0-20171103203638-1ea166775780/go.mod h1:Lj+Z9rebOhdfkVLjJ8T6VcRQv3SXugXy999NBtR9aFY=
 github.com/fatih/color v1.13.0 h1:8LOYc1KYPPmyKMuN8QV2DNRWNbLo6LZ0iLs8+mlH53w=
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
-github.com/katangensis/utls v0.0.0-20230111080902-ec47374bbc3c h1:mFc8ONVmk8uhzV6Gtps3cHGG80hjONwysK01I0Oyunc=
-github.com/katangensis/utls v0.0.0-20230111080902-ec47374bbc3c/go.mod h1:3/5NmgSviMc4jc80U83IXXePZQL/evYrcmotKIZK2XY=
+github.com/katangensis/utls v0.0.0-20230111082640-bd39e5ff3b8b h1:zYtu9cVIh9hyc08w96GsgkMsVJsLF23D9c62eDREw4E=
+github.com/katangensis/utls v0.0.0-20230111082640-bd39e5ff3b8b/go.mod h1:3/5NmgSviMc4jc80U83IXXePZQL/evYrcmotKIZK2XY=
 github.com/klauspost/compress v1.4.1/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/klauspost/cpuid v1.2.0/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
 github.com/mattn/go-colorable v0.1.9 h1:sqDoxXbdeALODt0DAeJCVp38ps9ZogZEAXjus69YV3U=

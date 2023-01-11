@@ -7,7 +7,7 @@ require (
 	github.com/davidlinketech/cclient v1.1.6
 	github.com/davidlinketech/fhttp v1.2.2
 	github.com/fatih/color v1.13.0
-	github.com/katangensis/utls v0.0.0-20230111080902-ec47374bbc3c
+	github.com/katangensis/utls v0.0.0-20230111082640-bd39e5ff3b8b
 )
 
 require (
