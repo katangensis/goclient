@@ -3,16 +3,16 @@ module tlsapi
 go 1.17
 
 require (
-	github.com/Carcraftz/cclient v0.0.0-20210907233050-29fc0b0a880a
-	github.com/Carcraftz/fhttp v0.0.0-20210902023210-28df3f3a12b5
-	github.com/Carcraftz/utls v0.0.0-20220413235215-6b7c52fd78b6
-	github.com/andybalholm/brotli v1.0.3
+	github.com/andybalholm/brotli v1.0.4
 	github.com/davidlinketech/cclient v1.1.6
 	github.com/davidlinketech/fhttp v1.2.2
 	github.com/fatih/color v1.13.0
+	github.com/katangensis/utls v0.0.0-20230111080902-ec47374bbc3c
 )
 
 require (
+	github.com/Carcraftz/fhttp v0.0.0-20220112175241-f36cd20af880 // indirect
+	github.com/Carcraftz/utls v0.0.0-20220413235215-6b7c52fd78b6 // indirect
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

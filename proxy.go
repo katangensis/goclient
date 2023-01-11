@@ -20,7 +20,7 @@ import (
 
 	http "github.com/davidlinketech/fhttp"
 
-	tls "github.com/Carcraftz/utls"
+	tls "github.com/katangensis/utls"
 )
 
 //var client http.Client
@@ -107,7 +107,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	}
 	*/
 
-	client, err := cclient.NewClient(tls.HelloChrome_100, proxy, allowRedirect, time.Duration(timeout))
+	client, err := cclient.NewClient(tls.HelloChromeNew, proxy, allowRedirect, time.Duration(timeout))
 	if err != nil {
 		log.Fatal(err)
 	}
