@@ -4,21 +4,22 @@ import (
 	"compress/zlib"
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
 	"io/ioutil"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/fatih/color"
 
 	"bytes"
 	"compress/gzip"
 	"net/url"
 	"strings"
 
-	"github.com/davidlinketech/cclient"
 	"github.com/andybalholm/brotli"
+	"github.com/katangensis/cclient"
 
-	http "github.com/davidlinketech/fhttp"
+	http "github.com/katangensis/fhttp"
 
 	tls "github.com/katangensis/utls"
 )
@@ -28,19 +29,20 @@ import (
 func main() {
 	port := flag.String("port", "8082", "A port number (default 8082)")
 	flag.Parse()
+	fmt.Println("Forked and changed this API.")
 	fmt.Println("Hosting a TLS API on port " + *port)
-	fmt.Println("Forked and changed this API. If you want to donate to the real creator --> https://paypal.me/carcraftz")
 	http.HandleFunc("/", handleReq)
 	err := http.ListenAndServe(":"+string(*port), nil)
 	if err != nil {
 		log.Fatalln("Error starting the HTTP server:", err)
 	}
+
 }
 
 func getCookieStr(targetUrl string, client http.Client) string {
-	parsed,_ := url.Parse(targetUrl)
+	parsed, _ := url.Parse(targetUrl)
 	cookie := client.Jar.Cookies(parsed)
-	if len(cookie) > 1{
+	if len(cookie) > 1 {
 		cookieString := ""
 		for _, c := range cookie {
 			cookieString += c.Name + "=" + c.Value + "; "
@@ -98,13 +100,13 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	// Change JA3
 	//var tlsClient tls.ClientHelloID
 	/*
-	if strings.Contains(strings.ToLower(userAgent), "chrome") {
-		tlsClient = tls.HelloChrome_Auto
-	} else if strings.Contains(strings.ToLower(userAgent), "firefox") {
-		tlsClient = tls.HelloFirefox_Auto
-	} else {
-		tlsClient = tls.HelloIOS_Auto
-	}
+		if strings.Contains(strings.ToLower(userAgent), "chrome") {
+			tlsClient = tls.HelloChrome_Auto
+		} else if strings.Contains(strings.ToLower(userAgent), "firefox") {
+			tlsClient = tls.HelloFirefox_Auto
+		} else {
+			tlsClient = tls.HelloIOS_Auto
+		}
 	*/
 
 	client, err := cclient.NewClient(tls.HelloChrome_100, proxy, allowRedirect, time.Duration(timeout))
@@ -147,7 +149,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 		"sec-ch-ua",
 		"accept",
 		"access-control-request-method",
-    	"access-control-request-headers",
+		"access-control-request-headers",
 		"content-type",
 		"x-newrelic-id",
 		"x-requested-with",
@@ -174,10 +176,10 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	//TODO: REDUCE TIME COMPLEXITY (This code is very bad)
 	headerorderkey := []string{}
 	headerorderkey = append(headerorderkey, "host") //added this to make the host appear first?
-	
+
 	//if r.Method == "POST" {
-		//headerorderkey = append(headerorderkey, "content-length") 
-	//}	
+	//headerorderkey = append(headerorderkey, "content-length")
+	//}
 
 	for _, key := range masterheaderorder {
 		for k, v := range r.Header {
@@ -207,11 +209,10 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	}
 	req.Header.Set("Host", u.Host)
 
-
 	if r.Method == "POST" {
 		//fmt.Printf("\nPOST REQUEST.......\n")
 		//body, _ := ioutil.ReadAll(r.Body)
-		//contentLen := strconv.Itoa(len([]rune((string(body))))) 
+		//contentLen := strconv.Itoa(len([]rune((string(body)))))
 		//req.Header.Set("Content-Length", contentLen)
 		req.TransferEncoding = []string{"identity"} //https://gist.github.com/miguelmota/c88d6a7750cf2dab20f9a5d43f6b81c4  //to hide Transfer Encoding header
 		//req.ContentLength = int64(len(body))
@@ -219,12 +220,12 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 
 	//append our normal headers
 	for k := range r.Header {
-		if k != "Host" && !strings.Contains(k, "Poptls") {//} && k != "Content-Length" ) { // won't add host here in case it was in headers
+		if k != "Host" && !strings.Contains(k, "Poptls") { //} && k != "Content-Length" ) { // won't add host here in case it was in headers
 			v := r.Header.Get(k)
 			req.Header.Set(k, v)
 		}
 	}
-	
+
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("[%s][%s][%s]\r\n", color.YellowString("%s", time.Now().Format("2012-11-01T22:08:41+00:00")), color.BlueString("%s", pageURL), color.RedString("Connection Failed"))
@@ -248,19 +249,19 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	//forward response headers
 	fmt.Printf("\n")
 	for k, v := range resp.Header {
-		if k != "Set-Cookie" && k != "set-cookie" && k != "Content-Length" && k != "Content-Encoding"  {
+		if k != "Set-Cookie" && k != "set-cookie" && k != "Content-Length" && k != "Content-Encoding" {
 			for _, kv := range v {
 				w.Header().Add(k, kv)
 				//fmt.Printf("%s = %s\r\n",k, kv)
-			}		
+			}
 		}
 	}
 
 	// this is so the set-cookie headers are not merged into one header/value pair
 	cookies := resp.Cookies()
 	for _, c := range cookies {
-			w.Header().Add("set-cookie", c.Raw)
-			//fmt.Printf("%s = %s\r\n", "Set-Cookie", c.Raw)
+		w.Header().Add("set-cookie", c.Raw)
+		//fmt.Printf("%s = %s\r\n", "Set-Cookie", c.Raw)
 	}
 
 	w.Header().Add("orginal-request-url", endpoint)
@@ -273,7 +274,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	} else {
 		status = color.GreenString("%s", resp.Status)
 	}
-	fmt.Printf("[%s][%s][%s][%s]\r\n", color.YellowString("%s", time.Now().Format("2012-11-01T22:08:41+00:00")), color.BlueString("%s", pageURL),r.Method, status)
+	fmt.Printf("[%s][%s][%s][%s]\r\n", color.YellowString("%s", time.Now().Format("2012-11-01T22:08:41+00:00")), color.BlueString("%s", pageURL), r.Method, status)
 
 	//forward decoded response body
 	encoding := resp.Header["Content-Encoding"]
@@ -283,7 +284,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	//finalres = string(body)
 	//fmt.Printf("\nBODY: %s\r\n\n",finalres)
 
